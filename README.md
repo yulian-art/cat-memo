@@ -1,19 +1,16 @@
-# 备忘录 · 课前版
+# 备忘录 · 课后版
 
-一节 90 分钟的后端体验课：Go + Gin + MySQL，做出一个能存数据的备忘录。
+90 分钟后端体验课的完整代码，三部分都能在本机跑起来。
 
-这个分支是**上课用的起点**：前端已经写好，后端的 `main.go` 只有骨架和 TODO，课上跟着补完。
+| 目录 | 说明 | 启动 | 端口 |
+| --- | --- | --- | --- |
+| `memo-backend` | 本节课的完整后端（Gin + GORM + MySQL） | `go run .` | 9000 |
+| `memo-web` | 前端页面（Vue 3 + Vite） | `npm install` 后 `npm run dev` | 5173 |
+| `catDemo` | 旧版完整实现：Gin 直接返回页面，页面就是 memo-web 的构建产物 | `go run .` | 8080 |
 
-## 目录
+## 准备
 
-| 目录 | 内容 |
-| --- | --- |
-| `memo-web` | 前端页面（Vue 3 + Vite），已完成 |
-| `memo-backend` | 后端（Go + Gin + GORM），只有骨架 |
-
-## 课前准备
-
-Go、Node/npm、MySQL 都能在终端里查到版本号，MySQL 里建好库：
+MySQL 建库（两个后端都用 `db1`，表由 AutoMigrate 建）：
 
 ```sql
 CREATE DATABASE IF NOT EXISTS db1 CHARACTER SET utf8mb4;
@@ -21,21 +18,20 @@ CREATE DATABASE IF NOT EXISTS db1 CHARACTER SET utf8mb4;
 
 ## 跑起来
 
-```bash
-# 终端 1：后端
-cd memo-backend
-go run .
+本节课的方式（前后端分离）：
 
-# 终端 2：前端
-cd memo-web
-npm install
-npm run dev
+```bash
+# 终端 1
+cd memo-backend && go run .                  # 9000
+
+# 终端 2
+cd memo-web && npm install && npm run dev    # 5173
 ```
 
-打开终端里给出的地址（默认 http://localhost:5173/）。页面能显示，但接口会返回 501，因为 TODO 还没补。
+旧版的方式（Gin 直接返回页面）：
 
-## 课上顺序
+```bash
+cd catDemo && go run .                       # 8080
+```
 
-① `initMySQL()` ② `Todo` ③ `main()` ④ 五个处理函数
-
-完整代码在另一个分支：`post-class`。
+两个后端读写同一张表 `db1.todos`，所以在一边加的事项，另一边也能看到。
