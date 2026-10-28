@@ -5,7 +5,7 @@
 ## 本地运行
 
 ```bash
-# 1. 准备数据库（只需一次；建库，建表由 AutoMigrate 负责）
+# 1. 准备数据库（只需一次；建表由 AutoMigrate 负责）
 mysql -h 127.0.0.1 -u root -p -e "CREATE DATABASE IF NOT EXISTS db1 CHARACTER SET utf8mb4"
 
 # 2. 启动
@@ -16,15 +16,15 @@ go run .
 
 ## 接口
 
-| 操作 | 方法与路径 | 请求体 | 成功响应 |
+| 操作 | 方法与路径 | 请求体 | 响应 |
 | --- | --- | --- | --- |
-| 添加 | `POST /v1/todo` | `{"title":"复习 HTTP"}` | `201` + 事项对象 |
-| 列表 | `GET /v1/todo` | 无 | `200` + 数组（空为 `[]`） |
-| 单查 | `GET /v1/todo/:id` | 无 | `200` + 事项对象 |
-| 修改 | `PUT /v1/todo/:id` | `{"title":"复习 HTTP","status":true}` | `200` + 事项对象 |
-| 删除 | `DELETE /v1/todo/:id` | 无 | `200` + `{"message":"deleted"}` |
+| 添加 | `POST /v1/todo` | `{"title":"复习 HTTP"}` | `200` + 带 `id` 的事项 |
+| 列表 | `GET /v1/todo` | 无 | `200` + 数组（空库为 `null`） |
+| 单查 | `GET /v1/todo/:id` | 无 | 还没实现，处理函数是空的 |
+| 修改 | `PUT /v1/todo/:id` | `{"title":"复习 HTTP","status":true}` | `200` + 修改后的事项 |
+| 删除 | `DELETE /v1/todo/:id` | 无 | `200` + `{"<id>":"deleted"}` |
 
-错误统一为 `{"error":"简短说明"}`：输入错误 `400`，记录不存在 `404`，数据库故障 `500`。
+出错时 HTTP 仍然是 `200`，响应体里给 `{"error":"原因"}`，前端会同时检查这两样。
 
 ## 快速验证
 
@@ -36,4 +36,4 @@ curl -i -X POST http://127.0.0.1:9000/v1/todo \
   -d '{"title":"完成第一次接口练习"}'
 ```
 
-`main.go` 里的结构：`initMySQL()` 连接数据库、`parseID()` 校验路径参数、五个处理函数分别对应五个接口。
+`main.go` 里的结构：`initMySQL()` 连接数据库，`main()` 里连库、建表、注册五个接口，每个接口的处理函数直接写在路由后面。
