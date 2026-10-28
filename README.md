@@ -39,3 +39,45 @@ npm run dev
 ① `initMySQL()` ② `Todo` ③ `main()` ④ 五个处理函数
 
 完整代码在另一个分支：`post-class`。
+
+## 两个分支怎么切换
+
+| 分支 | 内容 |
+| --- | --- |
+| `pre-class` | 上课起点：前端 + 后端骨架（默认分支） |
+| `post-class` | 课后版：`catDemo` + 完整后端 + 前端 |
+
+第一次拿代码：
+
+```bash
+git clone git@github.com:yulian-art/cat-memo.git
+cd cat-memo
+git branch -a          # 看远端有哪些分支
+```
+
+clone 下来默认就在 `pre-class`。想看课后版：
+
+```bash
+git checkout post-class          # 第一次会自动跟踪 origin/post-class
+```
+
+再切回上课起点：
+
+```bash
+git checkout pre-class
+```
+
+已经 clone 过、但本地没有另一个分支时，先拉一次远端分支再切换：
+
+```bash
+git fetch origin
+git checkout post-class
+```
+
+在某个分支上想拿最新内容：
+
+```bash
+git pull
+```
+
+不想装 git 的话，在 GitHub 页面左上角的分支下拉框里选 `post-class`，再点 Code → Download ZIP，也能直接下到课后版。
