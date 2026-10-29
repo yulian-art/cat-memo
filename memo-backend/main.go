@@ -91,7 +91,7 @@ func deleteTodo(c *gin.Context) {
 }
 
 func main() {
-	// TODO ③-1：先连数据库，失败就 log.Fatalf 退出
+	// TODO ③-1：先连数据库，失败就 panic 退出
 	// TODO ③-2：defer DB.Close()，程序结束时关掉连接
 	// TODO ③-3：DB.AutoMigrate(&Todo{}) 建表，并检查返回的 .Error
 
